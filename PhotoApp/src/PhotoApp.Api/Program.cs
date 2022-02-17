@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLog.Extensions.Logging;
 using PhotoApp.Api;
+using PhotoApp.Api.Middlewares;
 using PhotoApp.Core.Interfaces.Repositories;
 using PhotoApp.Core.Interfaces.Services;
 using PhotoApp.Core.Services;
@@ -21,6 +23,7 @@ builder.Logging.AddNLog();
 builder.Services.ConfigureCors();
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
@@ -47,6 +50,7 @@ IConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
 IConfigurationRoot configurationRoot = configurationBuilder.Build();
 LogManager.Configuration = new NLogLoggingConfiguration(configurationRoot.GetSection("NLog"));
 Logger logger = LogManager.GetCurrentClassLogger();
+//IApiVersionDescriptionProvider provider = builder.Services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
 
 
 try
@@ -61,10 +65,19 @@ try
         configurationBuilder.AddJsonFile($"appsettings.{app.Environment.ToString()}.json", optional: false);
 
         app.UseDeveloperExceptionPage();
+       /* app.UseHttpCodeAndLogMiddleware();*/
 
         // Configure Use Swagger {UI}
-        app.ConfigureSwagger();
+        
     }
+    else
+    {
+        app.UseHttpCodeAndLogMiddleware();
+        /*app.UseExceptionHandler("/Error");*/
+        app.UseHsts();
+    }
+
+    app.ConfigureSwagger(builder.Services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>());
 
     app.UseHttpsRedirection();
 

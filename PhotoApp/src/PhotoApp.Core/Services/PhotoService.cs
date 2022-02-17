@@ -35,7 +35,6 @@ namespace PhotoApp.Core.Services
         {
             try
             {
-                /*throw new ArgumentNullException("Hello world");*/
                 return await this._photoRepository.GetAll();
             }
             catch (Exception ex)
