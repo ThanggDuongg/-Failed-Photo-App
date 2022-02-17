@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using PhotoApp.Core.Interfaces.Services;
 using PhotoApp.Core.Models;
 
-namespace PhotoApp.Api.V1.Controllers
+namespace PhotoApp.Api.V2.Controllers
 {
     [Route("api/" + ApiConstants.ServiceName + "/v{api-version:apiVersion}/[controller]")]
-    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [ApiController]
     public class PhotoController : ControllerBase
     {

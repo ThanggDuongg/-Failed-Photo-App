@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace PhotoApp.Api.V1.Controllers
+namespace PhotoApp.Api.V2.Controllers
 {
     [Route("api/" + ApiConstants.ServiceName + "/v{api-version:apiVersion}/[controller]")]
-    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [ApiController]
     public class WeatherForecastController : ControllerBase
     {
@@ -19,6 +19,11 @@ namespace PhotoApp.Api.V1.Controllers
             _logger = logger;
         }
 
+
+        /// <summary>
+        /// Test Version 02
+        /// </summary>
+        /// <returns></returns>
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
