@@ -16,6 +16,9 @@ namespace PhotoApp.Api.V1.Controllers
             _photoService = photoService ?? throw new ArgumentNullException(nameof(photoService));
         }
 
+        /// <summary>
+        /// Get all photos
+        /// </summary>
         [HttpGet]
         [Route("GetAll")]
         public async Task<ActionResult<IEnumerable<PhotoModel>>> GetAll()
