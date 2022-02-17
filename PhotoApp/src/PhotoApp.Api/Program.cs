@@ -16,7 +16,9 @@ builder.Services.ConfigureCors();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+// Configure Add Swagger
+builder.Services.ConfigureSwagger();
 
 // Configure dependency injection
 builder.Services.ConfigureDependencyInjection(builder.Configuration);
@@ -24,13 +26,22 @@ builder.Services.ConfigureDependencyInjection(builder.Configuration);
 // Config Auto Mapper    
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+// Configure All Url is lowcase
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+    options.LowercaseQueryStrings = true;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
+
+    // Configure Use Swagger {UI}
+    app.ConfigureSwagger();
 }
 
 app.UseHttpsRedirection();
