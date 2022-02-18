@@ -23,18 +23,20 @@ namespace PhotoApp.Api
 
             services.AddDbContext<PhotoAppDBContext>(option => {
                 option.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-                    sqlServerOptionsAction:sqlOptions =>
-                    {
-                        sqlOptions.EnableRetryOnFailure(
-                            maxRetryCount: 10,
-                            maxRetryDelay: TimeSpan.FromSeconds(5),
-                            errorNumbersToAdd: null
-                        );
-                    });
+                    sqlServerOptionsAction: sqlOptions =>
+                     {
+                         sqlOptions.EnableRetryOnFailure(
+                             maxRetryCount: 10,
+                             maxRetryDelay: TimeSpan.FromSeconds(5),
+                             errorNumbersToAdd: null
+                         );
+                     });
             });
 
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
+
+            services.AddHttpClient();
 
             return services;
         }
