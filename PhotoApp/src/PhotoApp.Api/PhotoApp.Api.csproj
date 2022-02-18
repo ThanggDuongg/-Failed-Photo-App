@@ -17,6 +17,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="HealthCheck\Custom.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
@@ -38,6 +47,16 @@
   <ItemGroup>
     <ProjectReference Include="..\PhotoApp.Core\PhotoApp.Core.csproj" />
     <ProjectReference Include="..\PhotoApp.Infrastructure\PhotoApp.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="HealthCheck\Custom.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="HealthCheck\MemoryHealthCheck.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
 
 </Project>

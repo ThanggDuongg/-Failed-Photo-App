@@ -1,3 +1,6 @@
+using HealthChecks.UI.Client;
+using HealthChecks.UI.Configuration;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using NLog;
@@ -43,6 +46,9 @@ builder.Services.AddRouting(options =>
     options.LowercaseQueryStrings = true;
 });
 
+// Configure Health Check
+builder.Services.ConfigureHealthChecks(builder.Configuration);
+
 IConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", false, reloadOnChange: true);
@@ -84,6 +90,19 @@ try
     app.UseAuthorization();
 
     app.MapControllers();
+
+    //HealthCheck Middleware
+    app.MapHealthChecks("api/health", new HealthCheckOptions()
+    {
+        Predicate = _ => true,
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
+
+    app.UseHealthChecksUI(delegate (Options options)
+    {
+        options.UIPath = "/healthcheck-ui";
+        options.AddCustomStylesheet("./HealthCheck/Custom.css");
+    });
 
     app.Run();
     logger.Info($"{ApiConstants.FriendlyServiceName} is stopped");

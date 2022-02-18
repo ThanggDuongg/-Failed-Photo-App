@@ -1,0 +1,8 @@
+﻿:root {
+    --primaryColor: #0e385e;
+    --secondColor: #f4f4f4;
+    --bgMenuActive: #0e385e;
+    --bgButton: #0e385e;
+    --logoImageUrl: url('https://upload.wikimedia.org/wikipedia/commons/7/78/Image.jpg');
+    --bgAside: var(--primaryColor);
+}
